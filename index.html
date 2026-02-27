@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tita Rahmawati — Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --bg2: #0d0d0d;
+  --border: rgba(255,255,255,0.07);
+  --orange: #e8622a;
+  --green: #2ec27e;
+  --text: #e8e4dc;
+  --muted: rgba(232,228,220,0.42);
+  --dim: rgba(232,228,220,0.22);
+  --grid-line: rgba(255,255,255,0.04);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 52px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.94);
+  backdrop-filter: blur(20px);
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.logo span { color: var(--orange); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+.btn-connect {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-connect:hover { border-color: var(--orange); color: var(--orange); }
+
+.ticker {
+  margin-top: 52px;
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+  overflow: hidden;
+  background: rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 2;
+}
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: scrollLeft 35s linear infinite;
+}
+.ticker-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+  padding: 0 28px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ticker-item .dot { color: var(--orange); font-size: 6px; }
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-left {
+  position: relative;
+  z-index: 10;
+  padding: 80px 48px 80px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--border);
+  background: rgba(8,8,8,0.6);
+}
+
+.hero-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 26px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.1s forwards;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-tag::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--orange);
+}
+
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(44px, 5.5vw, 72px);
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.25s forwards;
+}
+.hero-title .bracket { color: var(--orange); font-weight: 300; }
+
+.hero-sub {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 360px;
+  margin-bottom: 44px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.4s forwards;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.55s forwards;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--orange); color: #fff; }
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+
+.hero-status {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 32px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.7s forwards;
+}
+.hstat-mini { flex: 1; }
+.hstat-mini-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.hstat-mini-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.02em;
+}
+.hstat-mini-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--green);
+  margin-top: 2px;
+}
+
+.hero-right {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 1.2s 0.3s forwards;
+}
+
+.statue-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(15%) brightness(0.75) contrast(1.1);
+}
+
+.statue-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.06) 3px,
+    rgba(0,0,0,0.06) 4px
+  );
+  pointer-events: none;
+}
+
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(232,98,42,0.5);
+  border-style: solid;
+}
+.corner-tl { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
+.corner-tr { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+.corner-bl { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
+.corner-br { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
+
+.overlay-markets {
+  position: absolute;
+  top: 50%;
+  right: 28px;
+  transform: translateY(-40%);
+  background: rgba(8,8,8,0.88);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  width: 200px;
+  backdrop-filter: blur(10px);
+}
+.mkt-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.mkt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+}
+.mkt-row:last-child { border-bottom: none; }
+.mkt-name { color: var(--muted); }
+.mkt-val { color: var(--text); font-weight: 500; }
+.mkt-chg { font-size: 9px; }
+.mkt-chg.up { color: var(--green); }
+.mkt-chg.dn { color: #e84040; }
+
+.overlay-chart {
+  position: absolute;
+  bottom: 32px;
+  left: 28px;
+  background: rgba(8,8,8,0.88);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  width: 220px;
+  backdrop-filter: blur(10px);
+}
+.chart-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.chart-svg { width: 100%; height: 52px; display: block; }
+
+.stats-bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.6);
+}
+.sbar-item {
+  flex: 1;
+  padding: 22px 36px;
+  border-right: 1px solid var(--border);
+}
+.sbar-item:last-child { border-right: none; }
+.sbar-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+.sbar-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+}
+.sbar-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--green);
+  margin-top: 4px;
+}
+.sbar-open { color: var(--green); font-size: 14px; }
+
+.section {
+  position: relative;
+  z-index: 2;
+  padding: 88px 40px;
+}
+.section-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 48px;
+  height: 1px;
+  background: var(--orange);
+  opacity: 0.5;
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 52px;
+  max-width: 640px;
+}
+.section-title .hi { color: var(--orange); font-weight: 300; }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.pcard {
+  background: var(--bg);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  color: var(--text);
+  transition: background 0.25s;
+}
+.pcard:hover { background: rgba(255,255,255,0.025); }
+.pcard::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.pcard:hover::after { transform: scaleX(1); }
+
+.pcard-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+  margin-bottom: 14px;
+}
+.ptag {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.ptag.ml  { border-color: rgba(232,98,42,0.4); color: var(--orange); }
+.ptag.viz { border-color: rgba(46,194,126,0.35); color: var(--green); }
+.ptag.seg { border-color: rgba(79,158,247,0.4); color: #4f9ef7; }
+
+.ptitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.pdesc {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.plink {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--orange);
+  text-transform: uppercase;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.skill-card {
+  background: var(--bg);
+  padding: 30px;
+  transition: background 0.25s;
+}
+.skill-card:hover { background: rgba(255,255,255,0.02); }
+.skill-icon { font-size: 22px; margin-bottom: 14px; }
+.skill-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.skill-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
+.skill-bar { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+.skill-fill { height: 100%; background: var(--orange); }
+
+.terminal-wrap {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--border);
+  padding: 30px 36px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--green);
+  line-height: 2.1;
+  min-height: 270px;
+}
+.term-dots { color: var(--dim); letter-spacing: 5px; margin-bottom: 18px; font-size: 8px; }
+.t-line { animation: fadeIn 0.15s forwards; }
+.t-dim  { color: var(--muted); }
+.t-acc  { color: var(--orange); }
+.t-blue { color: #4f9ef7; }
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--green);
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.about-panel { background: var(--bg); padding: 48px; }
+.about-text {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--muted);
+}
+.about-text strong { color: var(--text); font-weight: 600; }
+
+.contact-heading {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 12px;
+}
+.contact-row:last-of-type { border-bottom: none; }
+.contact-row a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+.contact-row a:hover { color: var(--orange); }
+.c-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  width: 76px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.open-tag {
+  color: var(--green);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+}
+
+footer {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--dim);
+  background: rgba(0,0,0,0.5);
+}
+footer .logo { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+footer .logo span { color: var(--orange); }
+footer a { color: var(--muted); text-decoration: none; margin-left: 24px; transition: color 0.2s; }
+footer a:hover { color: var(--text); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scrollLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@media(max-width:900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { border-right: none; padding: 60px 24px; }
+  .hero-right { display: none; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(2,1fr); }
+  .about-grid { grid-template-columns: 1fr; }
+  .stats-bar { flex-direction: column; }
+  .section { padding: 60px 24px; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  footer { flex-direction: column; gap: 14px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">TITA<span>.</span>DEV</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <a class="btn-connect" href="https://www.linkedin.com/in/titarahmawati/" target="_blank">Connect</a>
+</nav>
+
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Data Analyst · Jakarta, ID</div>
+    <h1 class="hero-title">
+      Dominating<br>
+      Digital <span class="bracket">[Data]</span>
+    </h1>
+    <p class="hero-sub">
+      Real-time intelligence, predictive analytics, and machine learning. Engineered for those who want answers before the market does.
+    </p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#projects">View Projects</a>
+      <a class="btn-ghost" href="https://titax137.medium.com/" target="_blank">Read Medium →</a>
+    </div>
+    <div class="hero-status">
+      <div class="hstat-mini">
+        <div class="hstat-mini-label">Projects</div>
+        <div class="hstat-mini-val">9+</div>
+        <div class="hstat-mini-sub">↑ Published</div>
+      </div>
+      <div class="hstat-mini">
+        <div class="hstat-mini-label">Best Model</div>
+        <div class="hstat-mini-val">94%</div>
+        <div class="hstat-mini-sub">↑ Accuracy</div>
+      </div>
+      <div class="hstat-mini">
+        <div class="hstat-mini-label">Tools</div>
+        <div class="hstat-mini-val">12+</div>
+        <div class="hstat-mini-sub">↑ Stack</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <img class="statue-img" src="statue.jpeg" alt="Visual">
+    <div class="statue-scanlines"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="overlay-markets">
+      <div class="mkt-title">Skills Index</div>
+      <div class="mkt-row">
+        <span class="mkt-name">Python</span>
+        <span class="mkt-val">92%</span>
+        <span class="mkt-chg up">↑ 2.1%</span>
+      </div>
+      <div class="mkt-row">
+        <span class="mkt-name">SQL</span>
+        <span class="mkt-val">87%</span>
+        <span class="mkt-chg up">↑ 0.8%</span>
+      </div>
+      <div class="mkt-row">
+        <span class="mkt-name">Tableau</span>
+        <span class="mkt-val">85%</span>
+        <span class="mkt-chg up">↑ 1.4%</span>
+      </div>
+      <div class="mkt-row">
+        <span class="mkt-name">ML</span>
+        <span class="mkt-val">88%</span>
+        <span class="mkt-chg up">↑ 3.2%</span>
+      </div>
+      <div class="mkt-row">
+        <span class="mkt-name">TensorFlow</span>
+        <span class="mkt-val">78%</span>
+        <span class="mkt-chg dn">↓ 0.5%</span>
+      </div>
+    </div>
+
+    <div class="overlay-chart">
+      <div class="chart-label">Project Output · 2022–2025</div>
+      <svg class="chart-svg" viewBox="0 0 200 52" preserveAspectRatio="none">
+        <polyline points="0,42 25,36 50,38 75,24 100,28 125,18 150,12 175,8 200,4"
+          fill="none" stroke="#2ec27e" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <polyline points="0,42 25,36 50,38 75,24 100,28 125,18 150,12 175,8 200,4 200,52 0,52"
+          fill="rgba(46,194,126,0.08)" stroke="none"/>
+        <polyline points="0,48 30,44 70,42 110,36 160,30 200,22"
+          fill="none" stroke="#e8622a" stroke-width="1" opacity="0.7" vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="sbar-item">
+    <div class="sbar-label">Articles Published</div>
+    <div class="sbar-val">9</div>
+    <div class="sbar-sub">Medium · 2022–2025</div>
+  </div>
+  <div class="sbar-item">
+    <div class="sbar-label">Domains Covered</div>
+    <div class="sbar-val">5+</div>
+    <div class="sbar-sub">Sports · Retail · Telecom · CV</div>
+  </div>
+  <div class="sbar-item">
+    <div class="sbar-label">Tech Stack</div>
+    <div class="sbar-val">12+</div>
+    <div class="sbar-sub">Tools and Frameworks</div>
+  </div>
+  <div class="sbar-item">
+    <div class="sbar-label">Status</div>
+    <div class="sbar-val sbar-open">● Open</div>
+    <div class="sbar-sub">Available for hire</div>
+  </div>
+</div>
+
+<section class="section" id="projects">
+  <div class="section-eyebrow">Selected Work</div>
+  <h2 class="section-title">Projects That Tell A<br><span class="hi">Story</span> With Data</h2>
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<section class="section" id="skills" style="padding-top:0">
+  <div class="section-eyebrow">Technical Arsenal</div>
+  <h2 class="section-title">Tools I Use To Extract<br><span class="hi">Signal</span> From Noise</h2>
+  <div class="skills-grid" id="skillsGrid"></div>
+</section>
+
+<section class="section" id="process" style="padding-top:0">
+  <div class="section-eyebrow">How I Work</div>
+  <h2 class="section-title">My Analytical<br><span class="hi">Process,</span> Live</h2>
+  <div class="terminal-wrap">
+    <div class="term-dots">● ● ●</div>
+    <div id="termLines"></div>
+    <span class="cursor"></span>
+  </div>
+</section>
+
+<section class="section" id="about" style="padding-top:0">
+  <div class="section-eyebrow">About and Contact</div>
+  <h2 class="section-title">Let's Work<br><span class="hi">Together</span></h2>
+  <div class="about-grid">
+    <div class="about-panel">
+      <p class="about-text">
+        Hi, I'm <strong>Tita Rahmawati</strong> — a data analyst based in <strong>Jakarta, Indonesia</strong>.<br><br>
+        I have a passion for turning messy, complex data into clear, actionable stories. My work spans <strong>customer analytics, machine learning, sports analytics, computer vision,</strong> and <strong>business intelligence</strong>.<br><br>
+        I believe the best analyses don't just describe what happened — they reveal <strong>why it happened</strong> and what to do next.<br><br>
+        Currently <strong>open to new opportunities</strong> in data analytics and data science roles.
+      </p>
+    </div>
+    <div class="about-panel">
+      <div class="contact-heading">Get in touch</div>
+      <div class="contact-row">
+        <span class="c-label">LinkedIn</span>
+        <a href="https://www.linkedin.com/in/titarahmawati/" target="_blank">linkedin.com/in/titarahmawati</a>
+      </div>
+      <div class="contact-row">
+        <span class="c-label">Medium</span>
+        <a href="https://titax137.medium.com/" target="_blank">titax137.medium.com</a>
+      </div>
+      <div class="contact-row">
+        <span class="c-label">Location</span>
+        <span>Jakarta, Indonesia</span>
+      </div>
+      <div class="contact-row">
+        <span class="c-label">Status</span>
+        <span class="open-tag">● Open to opportunities</span>
+      </div>
+      <a class="btn-primary" href="https://www.linkedin.com/in/titarahmawati/" target="_blank" style="display:inline-block;margin-top:32px">Connect on LinkedIn →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">TITA<span>.</span>DEV</div>
+  <div>
+    <a href="https://titax137.medium.com/" target="_blank">Medium</a>
+    <a href="https://www.linkedin.com/in/titarahmawati/" target="_blank">LinkedIn</a>
+    <a href="#projects">Projects</a>
+  </div>
+  <div>© 2026 Tita Rahmawati · Data Analyst · Jakarta</div>
+</footer>
+
+<script>
+const skills = ['Python','SQL','Tableau','Google Data Studio','Machine Learning','TensorFlow','RFM Analysis','Data Visualization','Deep Learning','Statistical Analysis','Customer Segmentation','Pandas · NumPy'];
+const track = document.getElementById('tickerTrack');
+[...skills,...skills].forEach(s => {
+  const el = document.createElement('span');
+  el.className = 'ticker-item';
+  el.innerHTML = `<span class="dot">◆</span>${s}`;
+  track.appendChild(el);
+});
+
+const projects = [
+  {num:'01',tag:'Sports Analytics',type:'viz',title:'Lionel Messi — 2022 World Cup Goal Analysis',desc:"Thesis-level deep dive into Messi's Qatar 2022 performance using event data, heatmaps, and shot quality metrics to decode the genius behind the numbers.",href:'https://titax137.medium.com/a-sneak-peek-into-my-thesis-on-lionel-messi-2022-world-cup-goals-e37319c63a51'},
+  {num:'02',tag:'Customer Analytics',type:'seg',title:'RFM Customer Segmentation — SuperStore',desc:'Applied Recency-Frequency-Monetary analysis to segment customers of a California superstore, enabling targeted retention and upselling strategies.',href:'https://titax137.medium.com/rfm-customer-segmentation-superstore-dataset-fbb4fd657874'},
+  {num:'03',tag:'BI Dashboard',type:'viz',title:'Sales and KPI Superstore Dashboard',desc:'End-to-end BI dashboard tracking sales performance, regional KPIs, and trend analysis to support executive decision-making.',href:'https://titax137.medium.com/sales-kpi-superstore-sales-dashboard-cefecb29503b'},
+  {num:'04',tag:'Machine Learning',type:'ml',title:'Telco Churn Prediction — Improved Recall',desc:'Built a churn prediction model optimized for recall to identify at-risk telecom customers before they leave, reducing false negatives significantly.',href:'https://titax137.medium.com/predicting-and-retaining-at-risk-telco-customers-through-improved-recall-360e118a184b'},
+  {num:'05',tag:'Data Visualization',type:'viz',title:'COVID-19 Dashboard — Google Data Studio',desc:'Interactive COVID-19 dashboard tracking case trends, recovery rates, and geographic spread. Built during apprenticeship program.',href:'https://titax137.medium.com/visualization-dashboard-covid-19-with-google-datastudio-apprenticeship-project-48cfbaf7d0ba'},
+  {num:'06',tag:'Computer Vision',type:'ml',title:'IkanMu — Fish Species and Freshness Detection',desc:'Mobile app using SSD MobileNet V3 to detect fish species and freshness in real time. Final project at Orbit Future Academy.',href:'https://titax137.medium.com/ikanmu-fish-species-and-freshness-detection-application-using-ssd-mobilenet-v3-ebc476e8baf8'},
+  {num:'07',tag:'Reinforcement Learning',type:'ml',title:'Deep Q-Learning — CartPole with TensorFlow',desc:"Implemented Deep Q-Learning to solve OpenAI Gym's CartPole using TensorFlow Keras, exploring reward shaping and policy convergence.",href:'https://titax137.medium.com/deep-q-learning-cartpole-using-ac3919a1329a'},
+  {num:'08',tag:'Motion Analysis',type:'viz',title:'Badminton Single Sports Motion Analysis',desc:'Academic project analyzing badminton player motion patterns using computer vision to extract performance insights from video data.',href:'https://titax137.medium.com/academic-project-badminton-single-sports-motion-analysis-50ee5e8880df'},
+  {num:'09',tag:'Deep Learning',type:'ml',title:'Flower Classification — Image Classifier',desc:'Trained a fully-connected neural network to classify dandelions and grasses using TensorFlow, exploring transfer learning and augmentation.',href:'https://titax137.medium.com/appertincehipproject-flower-classification-fully-connected-image-classifier-7dc8a72ae4a'},
+];
+const grid = document.getElementById('projectsGrid');
+projects.forEach(p => {
+  const a = document.createElement('a');
+  a.className = 'pcard';
+  a.href = p.href;
+  a.target = '_blank';
+  a.innerHTML = `<div class="pcard-num">${p.num}</div><span class="ptag ${p.type}">${p.tag}</span><div class="ptitle">${p.title}</div><p class="pdesc">${p.desc}</p><span class="plink">Read on Medium →</span>`;
+  grid.appendChild(a);
+});
+
+const skillsData = [
+  {icon:'🐍',name:'Python',bars:[['Pandas / NumPy',92],['Scikit-learn',85],['TensorFlow / Keras',78],['Matplotlib / Seaborn',88]]},
+  {icon:'📊',name:'Data Visualization',bars:[['Tableau',85],['Google Data Studio',90],['Plotly',72],['Power BI',68]]},
+  {icon:'🧠',name:'Machine Learning',bars:[['Classification',88],['Clustering / RFM',90],['Computer Vision',76],['Deep Q-Learning',70]]},
+  {icon:'🗄️',name:'Data and Infra',bars:[['SQL',87],['Google BigQuery',75],['Excel / Sheets',92],['Git',80]]},
+];
+const sg = document.getElementById('skillsGrid');
+skillsData.forEach(s => {
+  const d = document.createElement('div');
+  d.className = 'skill-card';
+  d.innerHTML = `<div class="skill-icon">${s.icon}</div><div class="skill-name">${s.name}</div>` +
+    s.bars.map(b => `<div class="skill-bar-row"><span>${b[0]}</span><div class="skill-bar"><div class="skill-fill" style="width:${b[1]}%"></div></div></div>`).join('');
+  sg.appendChild(d);
+});
+
+const termLines = [
+  {t:'> tita@dev:~$ python analyze.py --dataset superstore.csv', c:''},
+  {t:'> Loading dataset... 9,994 rows x 21 columns  [OK]', c:'t-dim'},
+  {t:'> Running RFM segmentation... clusters=5  silhouette=0.68', c:'t-acc'},
+  {t:'> Champion customers: 18.4%  At-risk: 22.1%', c:''},
+  {t:'> Insight: Top 20% customers drive 61% of revenue', c:'t-acc'},
+  {t:'> tita@dev:~$ python churn_model.py --optimize recall', c:''},
+  {t:'> Training XGBoost... recall=0.91  precision=0.84', c:'t-dim'},
+  {t:'> False negatives reduced by 34% vs baseline', c:'t-acc'},
+  {t:'> tita@dev:~$ jupyter notebook messi_analysis.ipynb', c:''},
+  {t:'> Parsing StatsBomb event data  688 shots analyzed', c:'t-blue'},
+  {t:'> xG model: Messi outperformed expectation by +3.2 goals', c:'t-acc'},
+  {t:'> All analyses complete  9 projects  0 errors ■', c:'t-dim'},
+];
+const tl = document.getElementById('termLines');
+let ti = 0;
+function addLine() {
+  const d = document.createElement('div');
+  d.className = 't-line' + (termLines[ti].c ? ' ' + termLines[ti].c : '');
+  d.textContent = termLines[ti].t;
+  tl.appendChild(d);
+  if (tl.children.length > 9) tl.removeChild(tl.firstChild);
+  ti = (ti + 1) % termLines.length;
+  setTimeout(addLine, 800 + Math.random() * 700);
+}
+setTimeout(addLine, 900);
+</script>
+</body>
+</html>
