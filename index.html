@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tita R — Data Analyst</title>
+<title>Tita Rahmawati — Data Analyst</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -378,6 +378,280 @@ nav {
   backdrop-filter: blur(16px);
   z-index: 6;
 }
+
+/* ── GAME TRIGGER WIDGET (floats below Skills Index) ── */
+@keyframes widget-float {
+  0%,100% { transform: translateY(-40%) translateY(0px); box-shadow: 0 4px 24px rgba(232,98,42,0.18); }
+  50%      { transform: translateY(-40%) translateY(-9px); box-shadow: 0 14px 36px rgba(232,98,42,0.32); }
+}
+@keyframes widget-pulse-border {
+  0%,100% { border-color: rgba(232,98,42,0.45); }
+  50%      { border-color: rgba(232,98,42,0.9); }
+}
+
+.overlay-game-btn {
+  position: absolute;
+  top: calc(50% + 178px);
+  right: 40px;
+  width: 280px;   /* 200px × 1.4 */
+  z-index: 6;
+  animation: widget-float 2.4s ease-in-out infinite;
+}
+.game-widget-btn {
+  width: 100%;
+  background: rgba(8,8,8,0.88);
+  border: 1px solid rgba(232,98,42,0.45);
+  padding: 17px 22px;   /* 12px/16px × 1.4 */
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  animation: widget-pulse-border 2.4s ease-in-out infinite;
+}
+.game-widget-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(232,98,42,0.10), transparent);
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+.game-widget-btn:hover { border-color: var(--orange); transform: scale(1.03); }
+.game-widget-btn:hover::before { opacity: 1; }
+.game-widget-left { text-align: left; }
+.game-widget-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;    /* 7px × 1.4 */
+  letter-spacing: 0.22em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.game-widget-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;   /* 10px × 1.4 */
+  letter-spacing: 0.08em;
+  color: var(--text);
+  font-weight: 500;
+}
+.game-widget-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;   /* 7px × 1.4 */
+  color: var(--orange);
+  letter-spacing: 0.12em;
+  margin-top: 4px;
+  opacity: 0.9;
+}
+.game-play-icon {
+  width: 39px; height: 39px;  /* 28px × 1.4 */
+  border: 1px solid rgba(232,98,42,0.55);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.game-widget-btn:hover .game-play-icon {
+  border-color: var(--orange);
+  background: rgba(232,98,42,0.18);
+}
+.game-play-icon svg { width: 14px; height: 14px; fill: var(--orange); margin-left: 2px; }
+
+/* ── ATHLETE ANIMATION KEYFRAMES ── */
+@keyframes fence-lunge   { 0%,100%{transform:translateX(0)} 40%{transform:translateX(16px)} 60%{transform:translateX(12px)} }
+@keyframes fence-arm     { 0%,100%{transform:rotate(-10deg)} 40%{transform:rotate(20deg) translateX(4px)} }
+@keyframes fence-blade   { 0%,100%{transform:rotate(0deg)} 40%,60%{transform:rotate(8deg) translateX(6px)} }
+@keyframes fence-back-arm{ 0%,100%{transform:rotate(30deg)} 40%{transform:rotate(60deg)} }
+@keyframes fence-front-leg{0%,100%{transform:rotate(-5deg)} 40%{transform:rotate(-25deg)} }
+@keyframes fence-back-leg { 0%,100%{transform:rotate(5deg)}  40%{transform:rotate(30deg)} }
+@keyframes fence-head-bob { 0%,100%{transform:translateY(0)} 40%{transform:translateY(3px)} }
+@keyframes row-body      { 0%,100%{transform:rotate(10deg)} 50%{transform:rotate(-15deg)} }
+@keyframes row-arm-pull  { 0%,100%{transform:rotate(-30deg)} 50%{transform:rotate(40deg)} }
+@keyframes row-oar       { 0%,100%{transform:rotate(-40deg)} 50%{transform:rotate(30deg)} }
+@keyframes row-legs      { 0%,100%{transform:scaleX(1.1)} 50%{transform:scaleX(0.85)} }
+@keyframes water-ripple  { 0%{transform:scaleX(0) translateX(-10px);opacity:0} 50%{opacity:.7} 100%{transform:scaleX(1.5) translateX(20px);opacity:0} }
+@keyframes skate-glide   { 0%,100%{transform:translateX(0)} 50%{transform:translateX(10px)} }
+@keyframes skate-arm-left{ 0%,100%{transform:rotate(-45deg)} 50%{transform:rotate(45deg)} }
+@keyframes skate-arm-right{0%,100%{transform:rotate(45deg)}  50%{transform:rotate(-45deg)} }
+@keyframes skate-leg-kick{ 0%,100%{transform:rotate(0deg)}  30%{transform:rotate(-35deg)} 60%{transform:rotate(20deg)} }
+@keyframes skate-trail   { 0%{opacity:.5;transform:scaleX(0.2)} 100%{opacity:0;transform:scaleX(1.8) translateX(20px)} }
+@keyframes sparkle       { 0%,100%{opacity:0;transform:scale(0)} 50%{opacity:1;transform:scale(1)} }
+@keyframes run-bob       { 0%,100%{transform:translateY(0)} 25%,75%{transform:translateY(-3px)} }
+@keyframes run-leg-a     { 0%,100%{transform:rotate(-20deg)} 50%{transform:rotate(30deg)} }
+@keyframes run-leg-b     { 0%,100%{transform:rotate(30deg)}  50%{transform:rotate(-20deg)} }
+@keyframes run-arm-a     { 0%,100%{transform:rotate(-25deg)} 50%{transform:rotate(15deg)} }
+@keyframes run-arm-b     { 0%,100%{transform:rotate(15deg)}  50%{transform:rotate(-25deg)} }
+@keyframes sprint-leg-a  { 0%,100%{transform:rotate(-40deg)} 50%{transform:rotate(50deg)} }
+@keyframes sprint-leg-b  { 0%,100%{transform:rotate(50deg)}  50%{transform:rotate(-40deg)} }
+@keyframes sprint-arm-a  { 0%,100%{transform:rotate(-40deg)} 50%{transform:rotate(30deg)} }
+@keyframes sprint-arm-b  { 0%,100%{transform:rotate(30deg)}  50%{transform:rotate(-40deg)} }
+@keyframes lift-press    { 0%,100%{transform:translateY(0)}  40%,60%{transform:translateY(-14px)} }
+@keyframes lift-arms     { 0%,100%{transform:rotate(80deg)}  40%,60%{transform:rotate(30deg)} }
+@keyframes lift-legs-squat{0%,100%{transform:scaleY(1);transform-origin:bottom} 40%,60%{transform:scaleY(0.8);transform-origin:bottom} }
+@keyframes lift-bar-shake{ 0%,100%{transform:translateX(0) rotate(0deg)} 40%{transform:translateX(-1px) rotate(-0.5deg)} 60%{transform:translateX(1px) rotate(0.5deg)} }
+@keyframes gym-split     { 0%,100%{transform:rotate(0deg)}  40%,60%{transform:rotate(-90deg)} }
+@keyframes gym-arms-wide { 0%,100%{transform:rotate(-10deg)} 40%,60%{transform:rotate(90deg)} }
+@keyframes bball-dribble { 0%,100%{transform:translateY(0)} 25%{transform:translateY(-30px)} 50%{transform:translateY(0)} 75%{transform:translateY(-20px)} }
+@keyframes bball-arm     { 0%,100%{transform:rotate(20deg)}  25%{transform:rotate(-20deg)} 75%{transform:rotate(-15deg)} }
+@keyframes endPop        { from{transform:scale(0.6);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes statIn        { to{opacity:1;transform:translateY(0)} }
+@keyframes rippleAnim    { to{transform:scale(4);opacity:0} }
+@keyframes iceShimmer    { from{transform:translateX(0)} to{transform:translateX(400%)} }
+@keyframes waveRock      { 0%,100%{transform:translateX(-6px) scaleX(1)} 50%{transform:translateX(6px) scaleX(1.05)} }
+
+/* ── MODAL OVERLAY ── */
+.game-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(6px);
+  padding: 20px;
+}
+.game-modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.game-modal {
+  background: #0d0d0d;
+  border: 1px solid rgba(255,255,255,0.09);
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  scrollbar-width: thin;
+  scrollbar-color: #222 transparent;
+}
+.game-modal-overlay.open .game-modal { transform: translateY(0) scale(1); }
+.game-modal::before { content:''; position:absolute; top:0; left:0; width:12px; height:12px; border-top:1px solid var(--orange); border-left:1px solid var(--orange); pointer-events:none; z-index:2; }
+.game-modal::after  { content:''; position:absolute; bottom:0; right:0; width:12px; height:12px; border-bottom:1px solid var(--orange); border-right:1px solid var(--orange); pointer-events:none; z-index:2; }
+
+.gm-close {
+  position: absolute; top: 14px; right: 14px;
+  background: none; border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(232,228,220,0.4); width: 30px; height: 30px;
+  font-size: 13px; cursor: pointer; transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10; font-family: 'IBM Plex Mono', monospace;
+}
+.gm-close:hover { border-color: var(--orange); color: var(--orange); }
+
+.gm-progress { height: 2px; background: rgba(255,255,255,0.06); }
+.gm-progress-fill { height: 100%; background: var(--orange); transition: width 0.6s cubic-bezier(0.16,1,0.3,1); width: 0%; }
+
+/* Stage */
+.gm-stage {
+  height: 170px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: flex-end; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.gm-stage::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);
+  pointer-events: none; z-index: 3;
+}
+.gm-stage-floor {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
+  background: repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(232,98,42,0.04) 40px,rgba(232,98,42,0.04) 41px),
+              repeating-linear-gradient(0deg,transparent,transparent 20px,rgba(232,98,42,0.04) 20px,rgba(232,98,42,0.04) 21px);
+}
+.gm-stage::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg,transparent,rgba(232,98,42,0.3),transparent);
+  z-index: 4;
+}
+.gm-sport-label {
+  position: absolute; top: 12px; left: 18px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px; letter-spacing: 0.3em;
+  color: rgba(232,98,42,0.45); text-transform: uppercase; z-index: 5;
+}
+
+/* Ice / water */
+.gm-ice { position:absolute;bottom:0;left:0;right:0;height:22px; background:linear-gradient(180deg,transparent,rgba(180,220,255,0.05)); }
+.gm-ice::after { content:'';position:absolute;top:50%;left:-100%;width:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(180,220,255,0.35),transparent);animation:iceShimmer 3s ease-in-out infinite; }
+.gm-water { position:absolute;bottom:0;left:0;right:0;height:16px;overflow:hidden; }
+.gm-wave  { position:absolute;bottom:0;left:-10px;right:-10px;height:7px;background:rgba(0,100,200,0.14);border-radius:50% 50% 0 0;animation:waveRock 2s ease-in-out infinite; }
+.gm-wave:nth-child(2){ height:4px;animation-delay:-1s;opacity:.6; }
+
+/* Game body */
+.gm-body { padding: 24px 28px 28px; }
+.gm-round-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.gm-round-tag { font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:0.25em; color:var(--dim); text-transform:uppercase; }
+.gm-pips { display:flex; gap:4px; }
+.gm-pip  { width:16px;height:2px;background:#1e1e1e;transition:background 0.3s; }
+.gm-pip.hit  { background:var(--green); }
+.gm-pip.miss { background:#e84040; }
+.gm-pip.curr { background:var(--orange); }
+
+.gm-section-label { font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:0.28em;color:var(--dim);text-transform:uppercase;margin-bottom:9px; }
+
+.gm-stats { display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:20px; }
+@media(max-width:500px){ .gm-stats{grid-template-columns:1fr} }
+.gm-stat-row { display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);opacity:0;transform:translateY(5px);animation:statIn 0.3s ease forwards; }
+.gm-stat-row:nth-child(1){animation-delay:.04s}.gm-stat-row:nth-child(2){animation-delay:.09s}.gm-stat-row:nth-child(3){animation-delay:.13s}.gm-stat-row:nth-child(4){animation-delay:.17s}.gm-stat-row:nth-child(5){animation-delay:.21s}.gm-stat-row:nth-child(6){animation-delay:.25s}
+.gm-stat-name { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase; }
+.gm-stat-right { display:flex;align-items:center;gap:8px; }
+.gm-stat-bar  { width:48px;height:1px;background:rgba(255,255,255,0.08);overflow:hidden; }
+.gm-stat-fill { height:100%;background:var(--orange);width:0;transition:width 0.9s cubic-bezier(0.16,1,0.3,1); }
+.gm-stat-val  { font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;min-width:32px;text-align:right; }
+
+.gm-choices { display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:16px; }
+@media(max-width:500px){ .gm-choices{grid-template-columns:1fr} }
+.gm-choice-btn {
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);
+  color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:8px;
+  letter-spacing:0.14em;text-transform:uppercase;padding:13px 14px;
+  cursor:pointer;text-align:left;transition:all 0.15s;
+  display:flex;align-items:center;gap:9px;position:relative;overflow:hidden;
+}
+.gm-choice-btn::before { content:attr(data-lbl);font-size:7px;color:rgba(255,255,255,0.2);min-width:11px;flex-shrink:0;transition:color 0.15s; }
+.gm-choice-btn:hover:not(:disabled){ border-color:var(--orange);color:var(--text);background:rgba(232,98,42,0.04); }
+.gm-choice-btn:hover:not(:disabled)::before { color:var(--orange); }
+.gm-choice-btn.correct { border-color:var(--green)!important;color:var(--green)!important;background:rgba(46,194,126,0.04); }
+.gm-choice-btn.correct::before { color:var(--green)!important; }
+.gm-choice-btn.wrong   { border-color:#e84040!important;color:#e84040!important;background:rgba(232,64,64,0.04); }
+.gm-choice-btn.wrong::before   { color:#e84040!important; }
+.gm-choice-btn.reveal  { border-color:var(--green)!important;color:var(--green)!important;opacity:.5; }
+.gm-choice-btn:disabled{ cursor:default; }
+.gm-ripple { position:absolute;border-radius:50%;transform:scale(0);animation:rippleAnim 0.5s linear;background:rgba(232,98,42,0.12);pointer-events:none; }
+
+.gm-feedback-row { display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px; }
+.gm-feedback-msg { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;opacity:0;transition:opacity 0.25s;flex:1;line-height:1.7; }
+.gm-feedback-msg.show{ opacity:1; }
+.gm-feedback-msg.g { color:var(--green); }
+.gm-feedback-msg.r { color:#e84040; }
+.gm-next-btn { background:transparent;border:1px solid var(--orange);color:var(--orange);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 20px;cursor:pointer;transition:all 0.15s;opacity:0;pointer-events:none;white-space:nowrap; }
+.gm-next-btn.show { opacity:1;pointer-events:all; }
+.gm-next-btn:hover { background:var(--orange);color:#080808; }
+
+/* End screen */
+.gm-end { display:none;padding:44px 28px 40px;text-align:center; }
+.gm-end.show { display:block; }
+.gm-end-score { font-family:'Barlow Condensed',sans-serif;font-size:92px;line-height:1;color:var(--orange);letter-spacing:0.02em;animation:endPop 0.6s cubic-bezier(0.16,1,0.3,1); }
+.gm-end-label { font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.3em;color:var(--dim);text-transform:uppercase;margin-bottom:5px; }
+.gm-end-pct   { font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);letter-spacing:0.2em;margin-bottom:22px; }
+.gm-end-pips  { display:flex;gap:3px;justify-content:center;margin-bottom:20px; }
+.gm-end-pip   { width:18px;height:2px; }
+.gm-end-verdict { font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:0.08em;line-height:2;margin-bottom:28px;max-width:320px;margin-inline:auto; }
+.gm-end-verdict em { color:var(--text);font-style:normal; }
+.gm-restart { background:var(--orange);border:none;color:#080808;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;padding:13px 32px;cursor:pointer;transition:opacity 0.15s,transform 0.15s; }
+.gm-restart:hover { opacity:.87;transform:translateY(-1px); }
 .mkt-title {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 8px;
@@ -718,6 +992,7 @@ footer a:hover { color: var(--text); }
   .hero-left { padding: 80px 24px 60px; max-width: 100%; }
   .overlay-markets { display: none; }
   .overlay-chart { display: none; }
+  .overlay-game-btn { display: none; }
   .projects-grid { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: repeat(2,1fr); }
   .about-grid { grid-template-columns: 1fr; }
@@ -732,7 +1007,7 @@ footer a:hover { color: var(--text); }
 <body>
 
 <nav>
-  <div class="logo">TITA<span>.</span>R</div>
+  <div class="logo">TITA<span>.</span>DEV</div>
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -792,6 +1067,20 @@ footer a:hover { color: var(--text); }
     </div>
   </div>
 
+  <!-- Game trigger widget (below Skills Index) -->
+  <div class="overlay-game-btn">
+    <button class="game-widget-btn" onclick="openAthleteGame()">
+      <div class="game-widget-left">
+        <div class="game-widget-tag">Mini Game</div>
+        <div class="game-widget-name">Predict Athlete</div>
+        <div class="game-widget-sub">▸ Launch classifier</div>
+      </div>
+      <div class="game-play-icon">
+        <svg viewBox="0 0 16 16"><path d="M3 2l11 6-11 6V2z"/></svg>
+      </div>
+    </button>
+  </div>
+
   <!-- Chart overlay (bottom right) -->
   <div class="overlay-chart">
     <div class="chart-label">Project Output · 2022–2025</div>
@@ -809,8 +1098,8 @@ footer a:hover { color: var(--text); }
   <div class="hero-left">
     <div class="hero-tag">Data Analyst · Jakarta, ID</div>
     <h1 class="hero-title">
-      Digital<br>
-      Transformation <span class="bracket">[Data]</span>
+      Dominating<br>
+      Digital <span class="bracket">[Data]</span>
     </h1>
     <p class="hero-sub">
       Real-time intelligence, predictive analytics, and machine learning. Engineered for those who want answers before the market does.
@@ -920,7 +1209,7 @@ footer a:hover { color: var(--text); }
 </section>
 
 <footer>
-  <div class="logo">TITA<span>.</span>R</div>
+  <div class="logo">TITA<span>.</span>DEV</div>
   <div>
     <a href="https://titax137.medium.com/" target="_blank">Medium</a>
     <a href="https://www.linkedin.com/in/titarahmawati/" target="_blank">LinkedIn</a>
@@ -1139,6 +1428,362 @@ function addLine() {
   setTimeout(addLine, 800 + Math.random() * 700);
 }
 setTimeout(addLine, 900);
+</script>
+
+<!-- ══════════════════════════════════════════
+     PREDICT THE ATHLETE — MODAL GAME
+══════════════════════════════════════════ -->
+<div class="game-modal-overlay" id="gameModalOverlay" onclick="handleGameOverlayClick(event)">
+  <div class="game-modal" id="gameModal">
+    <button class="gm-close" onclick="closeAthleteGame()">✕</button>
+    <div class="gm-progress"><div class="gm-progress-fill" id="gmProgress"></div></div>
+
+    <!-- Athlete Stage -->
+    <div class="gm-stage" id="gmStage">
+      <span class="gm-sport-label" id="gmStageLabel">IDENTIFYING...</span>
+      <div class="gm-stage-floor"></div>
+    </div>
+
+    <!-- Game Play -->
+    <div id="gmPlay">
+      <div class="gm-body">
+        <div class="gm-round-row">
+          <span class="gm-round-tag" id="gmRoundTag">Round 1 / 8</span>
+          <div class="gm-pips" id="gmPips"></div>
+        </div>
+        <p class="gm-section-label">▸ Biometric & Performance Data</p>
+        <div class="gm-stats" id="gmStats"></div>
+        <p class="gm-section-label">▸ Classify this athlete</p>
+        <div class="gm-choices" id="gmChoices"></div>
+        <div class="gm-feedback-row">
+          <p class="gm-feedback-msg" id="gmFeedback"></p>
+          <button class="gm-next-btn" id="gmNext" onclick="gmNextRound()">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Screen -->
+    <div class="gm-end" id="gmEnd">
+      <p class="gm-end-label">Classification Score</p>
+      <div class="gm-end-score" id="gmEndScore">0/8</div>
+      <p class="gm-end-pct" id="gmEndPct">accuracy: 0%</p>
+      <div class="gm-end-pips" id="gmEndPips"></div>
+      <p class="gm-end-verdict" id="gmEndVerdict"></p>
+      <button class="gm-restart" onclick="gmStart()">↺ Run Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ─── ATHLETE DATA ─── */
+const GM_ATHLETES = [
+  { sport:'Fencer', stage:'fencer',
+    stats:[{n:'Reaction Time (ms)',v:'143',p:96},{n:'Lateral Speed',v:'9.4',p:88},{n:'Arm Precision',v:'97',p:97},{n:'VO₂ Max',v:'58',p:62},{n:'Body Fat %',v:'9%',p:12},{n:'Endurance',v:'71',p:65}] },
+  { sport:'Rower', stage:'rower',
+    stats:[{n:'VO₂ Max (ml/kg/min)',v:'72',p:88},{n:'Upper Body Power (W)',v:'420',p:90},{n:'Stroke Rate /min',v:'38',p:78},{n:'Body Mass (kg)',v:'92',p:74},{n:'Resting HR (bpm)',v:'42',p:18},{n:'Body Fat %',v:'8%',p:10}] },
+  { sport:'Figure Skater', stage:'skater',
+    stats:[{n:'Balance Index',v:'98',p:98},{n:'Flexibility',v:'94',p:94},{n:'Jump Height (cm)',v:'62',p:72},{n:'Body Fat %',v:'12%',p:20},{n:'Core Strength',v:'88',p:82},{n:'Rotational Power',v:'91',p:88}] },
+  { sport:'Marathon Runner', stage:'runner',
+    stats:[{n:'VO₂ Max (ml/kg/min)',v:'78',p:95},{n:'Body Fat %',v:'6%',p:8},{n:'Resting HR (bpm)',v:'38',p:12},{n:'Height (cm)',v:'168',p:52},{n:'Sprint Speed km/h',v:'22',p:30},{n:'Strength Index',v:'31',p:20}] },
+  { sport:'100m Sprinter', stage:'sprinter',
+    stats:[{n:'VO₂ Max (ml/kg/min)',v:'55',p:55},{n:'Body Fat %',v:'5%',p:6},{n:'Fast-Twitch Fibers',v:'82%',p:88},{n:'Sprint Speed km/h',v:'44',p:98},{n:'Strength Index',v:'74',p:68},{n:'Reaction Time (ms)',v:'130',p:98}] },
+  { sport:'Weightlifter', stage:'lifter',
+    stats:[{n:'VO₂ Max (ml/kg/min)',v:'42',p:28},{n:'Body Fat %',v:'14%',p:30},{n:'Max Lift (kg)',v:'210',p:98},{n:'Height (cm)',v:'170',p:55},{n:'Strength Index',v:'99',p:99},{n:'Explosive Power',v:'96',p:95}] },
+  { sport:'Gymnast', stage:'gymnast',
+    stats:[{n:'Flexibility Index',v:'97',p:97},{n:'Body Fat %',v:'7%',p:10},{n:'Height (cm)',v:'158',p:35},{n:'Body Control',v:'99',p:99},{n:'Strength Index',v:'70',p:62},{n:'Balance Index',v:'95',p:92}] },
+  { sport:'NBA Player', stage:'bball',
+    stats:[{n:'Height (cm)',v:'201',p:94},{n:'Vertical Jump (cm)',v:'78',p:90},{n:'Sprint Speed km/h',v:'30',p:55},{n:'Body Fat %',v:'8%',p:12},{n:'Agility Score',v:'88',p:84},{n:'VO₂ Max',v:'58',p:60}] },
+];
+const GM_ALL_SPORTS = GM_ATHLETES.map(a => a.sport);
+
+/* ─── SVG ATHLETES ─── */
+function gmSVG(type) {
+  const s = {
+    fencer:`<svg width="150" height="148" viewBox="0 0 150 148" class="gm-athlete-svg" style="position:relative;z-index:2"><ellipse cx="72" cy="143" rx="30" ry="3.5" fill="rgba(232,98,42,0.07)"/>
+<g style="animation:fence-lunge 1.4s ease-in-out infinite;transform-origin:72px 116px">
+  <line x1="72" y1="116" x2="44" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round" style="animation:fence-back-leg 1.4s ease-in-out infinite;transform-origin:72px 116px"/>
+  <line x1="72" y1="116" x2="92" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round" style="animation:fence-front-leg 1.4s ease-in-out infinite;transform-origin:72px 116px"/>
+  <line x1="72" y1="88" x2="72" y2="116" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round"/>
+  <line x1="72" y1="98" x2="52" y2="110" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:fence-back-arm 1.4s ease-in-out infinite;transform-origin:72px 98px"/>
+  <g style="animation:fence-arm 1.4s ease-in-out infinite;transform-origin:72px 98px">
+    <line x1="72" y1="98" x2="98" y2="106" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="98" y1="106" x2="136" y2="101" stroke="#999" stroke-width="1.5" stroke-linecap="round" style="animation:fence-blade 1.4s ease-in-out infinite;transform-origin:98px 106px"/>
+    <circle cx="136" cy="101" r="2" fill="#e8622a" opacity="0.8" style="animation:fence-blade 1.4s ease-in-out infinite;transform-origin:98px 106px"/>
+  </g>
+  <g style="animation:fence-head-bob 1.4s ease-in-out infinite;transform-origin:72px 80px">
+    <circle cx="72" cy="79" r="9" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+    <path d="M64 76 Q72 71 80 76" fill="none" stroke="#666" stroke-width="1.5"/>
+    <line x1="64" y1="77" x2="80" y2="77" stroke="#444" stroke-width="1"/>
+  </g>
+</g>
+<circle cx="136" cy="101" r="3" fill="#e8622a" opacity="0" style="animation:sparkle 1.4s 0.56s ease-in-out infinite"/>
+</svg>`,
+
+    rower:`<svg width="195" height="148" viewBox="0 0 195 148" class="gm-athlete-svg" style="position:relative;z-index:2"><rect x="10" y="127" width="175" height="14" rx="3" fill="rgba(0,100,200,0.1)"/>
+<path d="M18 127 Q97 133 177 127 L172 135 Q97 141 23 135 Z" fill="rgba(30,50,70,0.55)" stroke="#2a4060" stroke-width="1"/>
+<ellipse cx="28" cy="131" rx="10" ry="2.5" fill="none" stroke="rgba(0,150,255,0.2)" stroke-width="1" style="animation:water-ripple 1.2s ease-out infinite"/>
+<ellipse cx="167" cy="131" rx="10" ry="2.5" fill="none" stroke="rgba(0,150,255,0.2)" stroke-width="1" style="animation:water-ripple 1.2s 0.6s ease-out infinite"/>
+<g style="transform-origin:97px 124px;animation:row-body 1.2s ease-in-out infinite">
+  <g style="transform-origin:97px 124px;animation:row-legs 1.2s ease-in-out infinite">
+    <line x1="97" y1="124" x2="76" y2="126" stroke="#e8622a" stroke-width="4" stroke-linecap="round"/>
+    <line x1="97" y1="124" x2="118" y2="126" stroke="#e8622a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <line x1="97" y1="97" x2="97" y2="124" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round"/>
+  <g style="transform-origin:97px 105px;animation:row-arm-pull 1.2s ease-in-out infinite">
+    <line x1="97" y1="105" x2="74" y2="113" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <g style="transform-origin:97px 105px;animation:row-arm-pull 1.2s 0.6s ease-in-out infinite">
+    <line x1="97" y1="105" x2="120" y2="113" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <circle cx="97" cy="89" r="9" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+</g>
+<line x1="74" y1="113" x2="18" y2="124" stroke="#777" stroke-width="2" stroke-linecap="round" style="transform-origin:74px 113px;animation:row-oar 1.2s ease-in-out infinite"/>
+<line x1="120" y1="113" x2="176" y2="124" stroke="#777" stroke-width="2" stroke-linecap="round" style="transform-origin:120px 113px;animation:row-oar 1.2s 0.6s ease-in-out infinite"/>
+</svg>`,
+
+    skater:`<svg width="155" height="148" viewBox="0 0 155 148" class="gm-athlete-svg" style="position:relative;z-index:2"><ellipse cx="77" cy="143" rx="26" ry="3" fill="rgba(180,220,255,0.06)"/>
+<ellipse cx="77" cy="143" rx="38" ry="3.5" fill="none" stroke="rgba(180,220,255,0.12)" stroke-width="1" style="animation:skate-trail 1.6s ease-out infinite"/>
+<circle cx="52" cy="68" r="2" fill="rgba(180,220,255,0.55)" style="animation:sparkle 1.6s 0.1s ease-in-out infinite"/>
+<circle cx="103" cy="64" r="1.5" fill="rgba(180,220,255,0.55)" style="animation:sparkle 1.6s 0.45s ease-in-out infinite"/>
+<circle cx="98" cy="84" r="1" fill="rgba(180,220,255,0.55)" style="animation:sparkle 1.6s 0.75s ease-in-out infinite"/>
+<circle cx="55" cy="91" r="1.5" fill="rgba(180,220,255,0.55)" style="animation:sparkle 1.6s 1.05s ease-in-out infinite"/>
+<g style="transform-origin:77px 106px;animation:skate-glide 3.2s ease-in-out infinite">
+  <path d="M69 110 Q77 120 85 110 Q81 117 77 119 Q73 117 69 110Z" fill="rgba(232,98,42,0.18)" stroke="rgba(232,98,42,0.35)" stroke-width="0.5"/>
+  <line x1="75" y1="117" x2="70" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round" style="animation:skate-leg-kick 1.6s ease-in-out infinite;transform-origin:75px 117px"/>
+  <line x1="79" y1="117" x2="84" y2="141" stroke="#e8622a" stroke-width="3" stroke-linecap="round" style="animation:skate-leg-kick 1.6s 0.8s ease-in-out infinite;transform-origin:79px 117px"/>
+  <line x1="65" y1="143" x2="77" y2="144" stroke="#999" stroke-width="1.5"/>
+  <line x1="80" y1="142" x2="92" y2="143" stroke="#999" stroke-width="1.5"/>
+  <line x1="77" y1="89" x2="77" y2="117" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round"/>
+  <g style="animation:skate-arm-left 1.6s ease-in-out infinite;transform-origin:77px 99px">
+    <line x1="77" y1="99" x2="50" y2="95" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="50" cy="95" r="2" fill="rgba(180,220,255,0.35)"/>
+  </g>
+  <g style="animation:skate-arm-right 1.6s ease-in-out infinite;transform-origin:77px 99px">
+    <line x1="77" y1="99" x2="104" y2="95" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="104" cy="95" r="2" fill="rgba(180,220,255,0.35)"/>
+  </g>
+  <circle cx="77" cy="81" r="9" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+  <path d="M85 79 Q92 75 90 83" fill="none" stroke="#666" stroke-width="1.5"/>
+</g></svg>`,
+
+    runner:`<svg width="115" height="148" viewBox="0 0 115 148" class="gm-athlete-svg" style="position:relative;z-index:2"><ellipse cx="57" cy="143" rx="20" ry="3" fill="rgba(232,98,42,0.07)"/>
+<g style="transform-origin:57px 96px;animation:run-bob 0.5s ease-in-out infinite">
+  <line x1="57" y1="113" x2="40" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round" style="animation:run-leg-a 0.5s ease-in-out infinite;transform-origin:57px 113px"/>
+  <line x1="57" y1="113" x2="72" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round" style="animation:run-leg-b 0.5s ease-in-out infinite;transform-origin:57px 113px"/>
+  <line x1="57" y1="86" x2="57" y2="113" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round" style="transform:rotate(6deg);transform-origin:57px 113px"/>
+  <line x1="57" y1="96" x2="40" y2="107" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:run-arm-a 0.5s ease-in-out infinite;transform-origin:57px 96px"/>
+  <line x1="57" y1="96" x2="74" y2="107" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:run-arm-b 0.5s ease-in-out infinite;transform-origin:57px 96px"/>
+  <circle cx="58" cy="78" r="8" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+  <line x1="50" y1="76" x2="66" y2="76" stroke="#e8622a" stroke-width="1.5"/>
+</g>
+<line x1="0" y1="105" x2="26" y2="105" stroke="rgba(232,98,42,0.18)" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="0" y1="115" x2="20" y2="115" stroke="rgba(232,98,42,0.1)" stroke-width="1" stroke-dasharray="4,4"/>
+</svg>`,
+
+    sprinter:`<svg width="115" height="148" viewBox="0 0 115 148" class="gm-athlete-svg" style="position:relative;z-index:2"><ellipse cx="60" cy="143" rx="20" ry="3" fill="rgba(232,98,42,0.09)"/>
+<g style="transform-origin:60px 96px;animation:run-bob 0.28s ease-in-out infinite">
+  <line x1="60" y1="113" x2="36" y2="143" stroke="#e8622a" stroke-width="3.5" stroke-linecap="round" style="animation:sprint-leg-a 0.28s ease-in-out infinite;transform-origin:60px 113px"/>
+  <line x1="60" y1="113" x2="78" y2="143" stroke="#e8622a" stroke-width="3.5" stroke-linecap="round" style="animation:sprint-leg-b 0.28s ease-in-out infinite;transform-origin:60px 113px"/>
+  <line x1="60" y1="84" x2="60" y2="113" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round" style="transform:rotate(10deg);transform-origin:60px 113px"/>
+  <line x1="60" y1="94" x2="38" y2="102" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:sprint-arm-a 0.28s ease-in-out infinite;transform-origin:60px 94px"/>
+  <line x1="60" y1="94" x2="82" y2="102" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:sprint-arm-b 0.28s ease-in-out infinite;transform-origin:60px 94px"/>
+  <circle cx="61" cy="76" r="8" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+</g>
+<line x1="0" y1="100" x2="28" y2="100" stroke="rgba(232,98,42,0.32)" stroke-width="1.5"/>
+<line x1="0" y1="107" x2="22" y2="107" stroke="rgba(232,98,42,0.22)" stroke-width="1"/>
+<line x1="0" y1="114" x2="16" y2="114" stroke="rgba(232,98,42,0.12)" stroke-width="1"/>
+</svg>`,
+
+    lifter:`<svg width="135" height="148" viewBox="0 0 135 148" class="gm-athlete-svg" style="position:relative;z-index:2"><ellipse cx="67" cy="143" rx="28" ry="4" fill="rgba(232,98,42,0.09)"/>
+<g style="animation:lift-bar-shake 1.6s ease-in-out infinite">
+  <g style="animation:lift-press 1.6s ease-in-out infinite;transform-origin:67px 76px">
+    <line x1="16" y1="76" x2="118" y2="76" stroke="#999" stroke-width="3" stroke-linecap="round"/>
+    <rect x="8"  y="68" width="8" height="16" rx="2" fill="#444" stroke="#333"/>
+    <rect x="4"  y="70" width="6" height="12" rx="1" fill="#333"/>
+    <rect x="119" y="68" width="8" height="16" rx="2" fill="#444" stroke="#333"/>
+    <rect x="125" y="70" width="6" height="12" rx="1" fill="#333"/>
+  </g>
+</g>
+<line x1="67" y1="91" x2="40" y2="76" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round" style="animation:lift-arms 1.6s ease-in-out infinite;transform-origin:67px 91px"/>
+<line x1="67" y1="91" x2="94" y2="76" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round" style="animation:lift-arms 1.6s ease-in-out infinite;transform-origin:67px 91px"/>
+<g style="animation:lift-legs-squat 1.6s ease-in-out infinite;transform-origin:67px 122px">
+  <line x1="67" y1="122" x2="46" y2="143" stroke="#e8622a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="67" y1="122" x2="88" y2="143" stroke="#e8622a" stroke-width="4" stroke-linecap="round"/>
+</g>
+<path d="M53 91 Q67 89 81 91 L79 122 Q67 124 55 122 Z" fill="rgba(232,98,42,0.08)" stroke="#e8e4dc" stroke-width="2"/>
+<circle cx="67" cy="82" r="9" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+<circle cx="40" cy="78" r="4" fill="rgba(200,200,200,0.05)" style="animation:sparkle 1.6s ease-in-out infinite"/>
+<circle cx="94" cy="78" r="4" fill="rgba(200,200,200,0.05)" style="animation:sparkle 1.6s 0.2s ease-in-out infinite"/>
+</svg>`,
+
+    gymnast:`<svg width="135" height="148" viewBox="0 0 135 148" class="gm-athlete-svg" style="position:relative;z-index:2"><ellipse cx="67" cy="143" rx="22" ry="3" fill="rgba(232,98,42,0.07)"/>
+<path d="M97 66 Q116 51 107 71 Q97 86 112 81" fill="none" stroke="rgba(232,98,42,0.35)" stroke-width="1.5" style="animation:skate-arm-right 2s ease-in-out infinite;transform-origin:97px 66px"/>
+<g style="transform-origin:67px 110px;animation:skate-glide 3s ease-in-out infinite">
+  <line x1="67" y1="115" x2="65" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="67" y1="115" x2="96" y2="101" stroke="#e8622a" stroke-width="3" stroke-linecap="round" style="animation:gym-split 2.4s ease-in-out infinite;transform-origin:67px 115px"/>
+  <line x1="67" y1="91" x2="67" y2="115" stroke="#e8e4dc" stroke-width="3" stroke-linecap="round"/>
+  <line x1="67" y1="101" x2="44" y2="93" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:gym-arms-wide 2.4s ease-in-out infinite;transform-origin:67px 101px"/>
+  <line x1="67" y1="101" x2="94" y2="93" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:gym-arms-wide 2.4s 1.2s ease-in-out infinite;transform-origin:67px 101px"/>
+  <circle cx="67" cy="83" r="8" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+  <path d="M67 77 Q76 71 78 79" fill="none" stroke="#666" stroke-width="1.5"/>
+</g></svg>`,
+
+    bball:`<svg width="125" height="148" viewBox="0 0 125 148" class="gm-athlete-svg" style="position:relative;z-index:2"><ellipse cx="58" cy="143" rx="22" ry="3" fill="rgba(232,98,42,0.07)"/>
+<g style="animation:bball-dribble 0.7s ease-in-out infinite">
+  <circle cx="82" cy="124" r="10" fill="none" stroke="#e8622a" stroke-width="2"/>
+  <path d="M73 120 Q82 114 91 120" fill="none" stroke="#e8622a" stroke-width="1"/>
+  <path d="M72 126 Q82 132 92 126" fill="none" stroke="#e8622a" stroke-width="1"/>
+  <line x1="82" y1="114" x2="82" y2="134" stroke="#e8622a" stroke-width="1"/>
+</g>
+<ellipse cx="82" cy="143" rx="7" ry="2" fill="rgba(232,98,42,0.18)" style="animation:bball-dribble 0.7s 0.35s ease-in-out infinite;transform-origin:82px 143px;transform:scaleY(0.3)"/>
+<line x1="58" y1="62" x2="58" y2="115" stroke="#e8e4dc" stroke-width="3.5" stroke-linecap="round"/>
+<line x1="58" y1="115" x2="42" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round"/>
+<line x1="58" y1="115" x2="70" y2="143" stroke="#e8622a" stroke-width="3" stroke-linecap="round"/>
+<line x1="58" y1="84" x2="80" y2="103" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round" style="animation:bball-arm 0.7s ease-in-out infinite;transform-origin:58px 84px"/>
+<line x1="58" y1="84" x2="38" y2="96" stroke="#e8e4dc" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="58" cy="53" r="9" fill="none" stroke="#e8e4dc" stroke-width="2"/>
+<path d="M49 51 Q58 47 67 51" fill="none" stroke="#e8622a" stroke-width="1.5"/>
+</svg>`,
+  };
+  return s[type] || s['runner'];
+}
+
+/* ─── STATE ─── */
+let gm = { deck:[], idx:0, score:0, answered:false, results:[] };
+function gmShuffle(a){ return [...a].sort(()=>Math.random()-0.5); }
+
+function openAthleteGame(){
+  document.getElementById('gameModalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  gmStart();
+}
+function closeAthleteGame(){
+  document.getElementById('gameModalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleGameOverlayClick(e){
+  if(e.target===document.getElementById('gameModalOverlay')) closeAthleteGame();
+}
+
+function gmStart(){
+  gm.deck=gmShuffle(GM_ATHLETES);
+  gm.idx=0; gm.score=0; gm.answered=false; gm.results=[];
+  document.getElementById('gmEnd').classList.remove('show');
+  document.getElementById('gmPlay').style.display='block';
+  gmBuildPips();
+  gmRender();
+}
+
+function gmBuildPips(){
+  const el=document.getElementById('gmPips'); el.innerHTML='';
+  gm.deck.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='gm-pip'+(i===0?' curr':'');
+    d.id='gmp'+i; el.appendChild(d);
+  });
+}
+
+function gmRender(){
+  gm.answered=false;
+  const a=gm.deck[gm.idx];
+  document.getElementById('gmRoundTag').textContent=`Round ${gm.idx+1} / ${gm.deck.length}`;
+  document.getElementById('gmProgress').style.width=`${(gm.idx/gm.deck.length)*100}%`;
+
+  // Stage
+  const stage=document.getElementById('gmStage');
+  stage.querySelectorAll('.gm-athlete-svg,.gm-ice,.gm-water').forEach(e=>e.remove());
+  document.getElementById('gmStageLabel').textContent='IDENTIFYING...';
+  const tmp=document.createElement('div');
+  tmp.innerHTML=gmSVG(a.stage);
+  stage.appendChild(tmp.firstElementChild);
+  if(a.stage==='rower'){ const w=document.createElement('div'); w.className='gm-water'; w.innerHTML='<div class="gm-wave"></div><div class="gm-wave"></div>'; stage.appendChild(w); }
+  if(a.stage==='skater'){ const ic=document.createElement('div'); ic.className='gm-ice'; stage.appendChild(ic); }
+
+  // Stats
+  const sg=document.getElementById('gmStats'); sg.innerHTML='';
+  a.stats.forEach(s=>{
+    const row=document.createElement('div'); row.className='gm-stat-row';
+    row.innerHTML=`<span class="gm-stat-name">${s.n}</span><div class="gm-stat-right"><div class="gm-stat-bar"><div class="gm-stat-fill" data-p="${s.p}"></div></div><span class="gm-stat-val">${s.v}</span></div>`;
+    sg.appendChild(row);
+  });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    sg.querySelectorAll('.gm-stat-fill').forEach(el=>{ el.style.width=el.dataset.p+'%'; });
+  }));
+
+  // Choices
+  const wrong=gmShuffle(GM_ALL_SPORTS.filter(s=>s!==a.sport));
+  const choices=gmShuffle([a.sport,...wrong.slice(0,3)]);
+  const cg=document.getElementById('gmChoices'); cg.innerHTML='';
+  ['A','B','C','D'].forEach((lbl,i)=>{
+    const btn=document.createElement('button'); btn.className='gm-choice-btn';
+    btn.dataset.lbl=lbl; btn.dataset.sport=choices[i]; btn.textContent=choices[i];
+    btn.onclick=(e)=>{ gmRipple(btn,e); gmAnswer(btn,choices[i],a.sport); };
+    cg.appendChild(btn);
+  });
+
+  const fm=document.getElementById('gmFeedback'); fm.className='gm-feedback-msg'; fm.textContent='';
+  document.getElementById('gmNext').className='gm-next-btn';
+}
+
+function gmRipple(btn,e){
+  const r=btn.getBoundingClientRect(), rip=document.createElement('span'); rip.className='gm-ripple';
+  const sz=Math.max(r.width,r.height);
+  rip.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-r.left-sz/2}px;top:${e.clientY-r.top-sz/2}px`;
+  btn.appendChild(rip); setTimeout(()=>rip.remove(),600);
+}
+
+function gmAnswer(btn,chosen,correct){
+  if(gm.answered)return; gm.answered=true;
+  document.querySelectorAll('.gm-choice-btn').forEach(b=>b.disabled=true);
+  const fm=document.getElementById('gmFeedback'), pip=document.getElementById('gmp'+gm.idx);
+  const quips=['Feature weighting sharp.','Clean classification.','Model converging.','Signal over noise.','The data confirms it.','Pattern recognition ++.','Bias low, variance low.','You trained for this.'];
+  if(chosen===correct){
+    btn.classList.add('correct');
+    fm.textContent=`✓ Correct — ${quips[gm.idx%quips.length]}`;
+    fm.className='gm-feedback-msg g show';
+    if(pip)pip.className='gm-pip hit'; gm.score++; gm.results.push(true);
+    document.getElementById('gmStageLabel').textContent=correct.toUpperCase();
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.gm-choice-btn').forEach(b=>{ if(b.dataset.sport===correct)b.classList.add('reveal'); });
+    fm.textContent=`✗ Incorrect — was: ${correct}`;
+    fm.className='gm-feedback-msg r show';
+    if(pip)pip.className='gm-pip miss'; gm.results.push(false);
+    document.getElementById('gmStageLabel').textContent=correct.toUpperCase();
+  }
+  document.getElementById('gmNext').className='gm-next-btn show';
+}
+
+function gmNextRound(){
+  if(gm.idx+1<gm.deck.length){ const np=document.getElementById('gmp'+(gm.idx+1)); if(np)np.classList.add('curr'); }
+  gm.idx++;
+  if(gm.idx>=gm.deck.length) gmEnd();
+  else gmRender();
+}
+
+function gmEnd(){
+  document.getElementById('gmProgress').style.width='100%';
+  document.getElementById('gmPlay').style.display='none';
+  document.getElementById('gmStageLabel').textContent='RESULTS';
+  const end=document.getElementById('gmEnd'); end.classList.add('show');
+  document.getElementById('gmEndScore').textContent=`${gm.score}/${gm.deck.length}`;
+  const pct=gm.score/gm.deck.length;
+  document.getElementById('gmEndPct').textContent=`accuracy: ${Math.round(pct*100)}%`;
+  const ep=document.getElementById('gmEndPips'); ep.innerHTML='';
+  gm.results.forEach(r=>{ const d=document.createElement('div'); d.className='gm-end-pip'; d.style.background=r?'var(--green)':'#e84040'; ep.appendChild(d); });
+  const vs=[
+    {m:1.0,t:`<em>Perfect run.</em> Zero classification errors.<br>Your model accuracy: 100%.`},
+    {m:.75,t:`<em>High accuracy.</em> Strong signal detection.<br>A few edge cases slipped through.`},
+    {m:.5, t:`Decent baseline. <em>Overfitting to assumptions.</em><br>The data had surprises — good.`},
+    {m:0,  t:`<em>High variance, low accuracy.</em><br>Your prior was wrong. More epochs needed.`},
+  ];
+  document.getElementById('gmEndVerdict').innerHTML=vs.find(v=>pct>=v.m).t;
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape' && document.getElementById('gameModalOverlay').classList.contains('open')) closeAthleteGame();
+  if((e.key==='Enter'||e.key===' ') && document.getElementById('gmNext').classList.contains('show')){ e.preventDefault(); gmNextRound(); }
+});
 </script>
 </body>
 </html>
